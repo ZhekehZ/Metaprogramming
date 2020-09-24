@@ -4,9 +4,7 @@
 (define-namespace-anchor a)
 (define ns (namespace-anchor->namespace a))
 
-;; Evaluate expression
-;;   e   -- expression
-;;   env -- hash table 
+;; Evaluate expression `e` in the environment `env`
 (define (eval-expr e env)
   (if (list? e)
     (if (equal? 'quote (first e))
@@ -17,10 +15,7 @@
   )
 )
 
-;; Evaluate block
-;;   block  -- list of commands
-;;   env    -- environment
-;;   blocks -- hash table (block-name -> block)
+;; Evaluate `block` in the environment `env` where `blocks` is a mapping (block-label -> block)
 (define (eval-block block env blocks)
   (define (continue env) (eval-block (rest block) env blocks))
   (define (jump block-name) (eval-block (hash-ref blocks block-name) env blocks))

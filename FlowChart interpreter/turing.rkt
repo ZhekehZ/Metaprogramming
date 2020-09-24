@@ -2,7 +2,7 @@
 
 (provide tm-int)
 
-;; Post's TM interpreter on the FlowChart
+;; Post's TM interpreter in FlowChart
 (define tm-int
   '(
     (read program tape)
