@@ -1,15 +1,17 @@
 #lang racket
 
-(provide fc-int)
+(provide fc-int fc-define-func eval-ns)
 (define-namespace-anchor a)
 (define ns (namespace-anchor->namespace a))
+(define (fc-define-func name x) (namespace-set-variable-value! (string->symbol name) x #t ns))
+(define (eval-ns e) (eval e ns))
 
 ;; Evaluate expression `e` in the environment `env`
 (define (eval-expr e env)
   (if (list? e)
     (if (equal? 'quote (first e))
       (second e)                                                                ;; constant expression
-      (apply (eval (first e) ns) (map (lambda (x) (eval-expr x env)) (rest e))) ;; function call
+      (apply (eval-ns (first e)) (map (lambda (x) (eval-expr x env)) (rest e))) ;; function call
     )   
     (hash-ref env e (lambda () (raise (format "INVALID VARIABLE NAME: ~a" e)))) ;; variable
   )
@@ -19,9 +21,8 @@
 (define (eval-block block env blocks)
   (define (continue env) (eval-block (rest block) env blocks))
   (define (jump block-name) (eval-block (hash-ref blocks block-name) env blocks))
-
   (match (first block)
-    [`(:= ,name ,expr)       (continue (hash-set env name (eval-expr expr env)))]
+    [`(* ,name := ,expr)     (continue (hash-set env name (eval-expr expr env)))]
     [`(if ,expr ,then ,else) (jump (if (eval-expr expr env) then else))]
     [`(goto ,label)          (jump label)]
     [`(return ,expr)         (eval-expr expr env)]
