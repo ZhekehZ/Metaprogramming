@@ -54,7 +54,7 @@
     (print-assignments (rest b))
     (print-control (rest b) (first table-index))
   )
+  (define (print-if-not-empty b table) (if (empty? (rest b)) (print-block b table) (print-block b table)))
   (print-read-stmt (first program))
-  (foldl print-block (hash) (rest program))
-  'FINISHED
+  (void (foldl print-if-not-empty (hash) (rest program)))
 )

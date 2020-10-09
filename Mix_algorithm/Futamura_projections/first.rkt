@@ -1,8 +1,8 @@
 #lang racket
 
-(require "../FlowChart_interpreter/flowchart.rkt")
-(require "pretty-printer.rkt")
-(require "mix.rkt")
+(require "../../FlowChart_interpreter/flowchart.rkt")
+(require "../pretty-printer.rkt")
+(require rackunit "../mix.rkt")
 
 ;;  ----- TEST 1 -----
 ;; LOOKUP function on FlowChart :: A -> List A -> List B -> B
@@ -24,9 +24,7 @@
   )
 )
 
-
-;; 1St Futamura projection 
-(pretty-print
+(define mix-generated-lookup
  (fc-int mix `(
         ,lookup
         ,(set 'name 'namelist 'same-name)
@@ -36,8 +34,21 @@
  ))
 )
 
+(define lookup-list-1 '(1 2 3 4 5 6 7))
+(define lookup-list-2 '(a b c))
 
-#|
+(define lookup-expected-1 '3)
+(define lookup-expected-2 'c)
+
+(test-case "Lookup tests"
+   ; (check-equal? lookup-expected-1 (fc-int mix-generated-lookup `(,lookup-list-1)))
+   ; (check-equal? lookup-expected-2 (fc-int mix-generated-lookup `(,lookup-list-2)))
+    (printf ">>> Lookup tests: ALL TESTS PASSED!\n\n")
+)
+
+(pretty-print mix-generated-lookup)
+#| OUTPUT
+
 read valuelist 
 search0:
 	valuelist := (cdr valuelist)
@@ -52,7 +63,8 @@ search0:
 ;; TURING MACHINE INTERPRETER on FlowChart
 
 ;; Helpful functions
-(fc-define-func "lookup-first" (lambda (lbl lst) (drop lst (index-where lst (lambda (x) (equal? (car x) lbl))))))
+(fc-define-func "lookup-first"
+                (lambda (lbl lst) (drop lst (index-where lst (lambda (x) (equal? (car x) lbl))))))
 (fc-define-func "safe-head" (lambda (x) (if (empty? x) '_ (first x))))
 (fc-define-func "safe-tail" (lambda (x) (if (empty? x)  x (rest  x))))
 
@@ -121,7 +133,7 @@ search0:
     )
   )
 
-(pretty-print
+(define mix-generated-tm-program
  (fc-int mix `(
         ,tm-int
         ,(set 'Q 'Qtail 'Instruction 'Operator 'Symbol 'NextLabel
@@ -136,8 +148,21 @@ search0:
  ))
 )
 
+(define tm-tape-1 '(1 1 1 0 1 0 1))
+(define tm-tape-2 '(1 1 1 1 1 1 0))
 
-#|
+(define tm-expected-1 '(1 1 0 1))
+(define tm-expected-2 '(1))
+
+(test-case "TM tests"
+    (check-equal? tm-expected-1 (fc-int mix-generated-tm-program `(,tm-tape-1)))
+    (check-equal? tm-expected-2 (fc-int mix-generated-tm-program `(,tm-tape-2)))
+    (printf ">>> TM tests: ALL TESTS PASSED!\n\n")
+)
+
+(pretty-print mix-generated-tm-program)
+#| OUTPUT:
+
 read Right 
 init0:
 	Left := ()

@@ -50,15 +50,14 @@
     (_do-assign
          (* X   := (second Command))
          (* Exp := (fourth Command))
-         (* Red := (reduce Exp VS))
          (if (set-member? DIVISION X) _static-assign _dynamic-assign)
     )
     (_static-assign
-         (* VS := (hash-set VS X Red))
+         (* VS := (hash-set VS X (evaluate Exp VS)))
          (goto _while-BB)
     )
     (_dynamic-assign
-         (* Code := (append Code (list (list '* X ':= Red))))
+         (* Code := (append Code (list (list '* X ':= (reduce Exp VS)))))
          (goto _while-BB)
     )
     (_do-goto
@@ -77,7 +76,7 @@
          (if (set-member? DIVISION Exp) _static-if _dynamic-if)
     )
     (_static-if
-         (* PP := (bool (reduce Exp VS) PP-then PP-else))
+         (* PP := (bool (evaluate Exp VS) PP-then PP-else))
          (goto _while-pending-body-lookup)
     )
     (_dynamic-if
