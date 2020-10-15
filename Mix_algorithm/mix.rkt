@@ -3,17 +3,14 @@
 (require "mix-extensions-for-flowchart-interpreter.rkt")
 (provide mix)
 
-
-(require "../FlowChart_interpreter/flowchart.rkt")
-(fc-define-func "helper" (λ (x) (map first x)))
-
 (define mix
   '(
     (read PROGRAM DIVISION VS0)
     (_init
-        (* Pending      := (set (list (caadr PROGRAM) VS0)))
-        (* Marked       := (set))
-        (* ResidualCode := (list (get-new-read-statement (car PROGRAM) VS0)))
+        (* Pending         := (set (list (caadr PROGRAM) VS0)))
+        (* Marked          := (set))
+        (* ResidualCode    := (list (get-new-read-statement (car PROGRAM) VS0)))
+        (* BlocksInPending := (find-blocks-in-pending (rest PROGRAM) DIVISION))
         (goto _while-pending-prepare)
     )
     (_while-pending-prepare
@@ -34,23 +31,22 @@
         (* Pending     := (set-rest Pending))
         (* Marked      := (set-add Marked (list PP VS)))
         (* Code        := (list (list PP VS)))
-        (* LabelLookup := (helper (rest PROGRAM)))
+        (* LabelLookup := BlocksInPending)
 
         (goto _while-pending-body-lookup)
     )
     (_while-pending-body-lookup ;; THE TRICK Begin
-        (* Static-PP := (car LabelLookup))
-        (if (equal? PP Static-PP) _while-pending-body-found _labels-exists-assertation)
+        (if (equal? PP (set-first LabelLookup)) _while-pending-body-found _labels-exists-assertation)
     )
     (_labels-exists-assertation
-        (* LabelLookup := (rest LabelLookup))
-        (if (empty? LabelLookup) _return-error _while-pending-body-lookup)
+        (* LabelLookup := (set-rest LabelLookup))
+        (if (set-empty? LabelLookup) _return-error _while-pending-body-lookup)
     )
     (_return-error
-        (return (return (format '"INVALID LABEL ~a" PP)))
+        (return (format '"INVALID LABEL ~a" PP))
     )
     (_while-pending-body-found
-        (* BB := (rest (assoc Static-PP PROGRAM)))
+        (* BB := (rest (assoc (set-first LabelLookup) PROGRAM)))
         (goto _while-BB)
     )                           ;; THE TRICK End
     (_while-BB (if (empty? BB) _add-code _while-BB-body))

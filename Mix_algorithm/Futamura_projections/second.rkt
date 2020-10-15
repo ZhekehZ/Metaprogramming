@@ -7,7 +7,10 @@
 )
 
 (define DIVISION
-  (set 'PROGRAM 'DIVISION 'LabelLookup 'BB 'Command 'X 'Exp 'PP-then 'PP-else 'Static-PP)
+  (set 'PROGRAM 'DIVISION
+       'LabelLookup 'BB 'Command
+       'X 'Exp 'PP-then 'PP-else
+       'BlocksInPending 'PP-static)
 )
 
 (define VS0
@@ -21,8 +24,8 @@
 
 (pretty-print compiler)
 #| OUTPUT IS TOO BIG TO BE COPIED HERE |#
-(printf ">>> COMPILER SIZE = ~a\n" (length compiler))
-#| OUTPUT: >>> COMPILER SIZE = 48 |#
+(printf ">>> COMPILER SIZE = ~a\n" (- (length compiler) 1))
+#| OUTPUT: >>> COMPILER SIZE = 21 |#
 
 ;; COMPILED TM PROGRAM
 (define compiled (fc-int compiler `(,(hash 'Q tm-program))))
