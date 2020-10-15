@@ -5,7 +5,7 @@
 ;; Pretty printer for mix output
 
 (define (get-or-create table key)
-  (define index (hash-ref table key (lambda () (hash-count table))))
+  (define index (hash-ref table key (λ () (hash-count table))))
   `(,(hash-set table key index) ,index)
 )
 

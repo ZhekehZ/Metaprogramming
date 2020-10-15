@@ -19,7 +19,7 @@
 
 ;; combines two tapes and a symbol into a single tape
 (define (tm-concat L s R)
-  (filter (lambda (x) (not (equal? x '_)))
+  (filter (λ (x) (not (equal? x '_)))
   (append (reverse L) (cons s R)))
 )
 

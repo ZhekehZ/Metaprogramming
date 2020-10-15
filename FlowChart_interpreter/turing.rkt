@@ -3,8 +3,8 @@
 (require (only-in "flowchart.rkt" fc-define-func))
 (provide tm-int)
 
-(fc-define-func "safe-head" (lambda (x) (if (empty? x) '_ (first x))))
-(fc-define-func "safe-tail" (lambda (x) (if (empty? x)  x (rest  x))))
+(fc-define-func "safe-head" (λ (x) (if (empty? x) '_ (first x))))
+(fc-define-func "safe-tail" (λ (x) (if (empty? x)  x (rest  x))))
 
 ;; Post's TM interpreter in FlowChart
 (define tm-int
