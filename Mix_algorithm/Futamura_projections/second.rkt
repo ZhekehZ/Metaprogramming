@@ -10,7 +10,7 @@
   (set 'PROGRAM 'DIVISION
        'LabelLookup 'BB 'Command
        'X 'Exp 'PP-then 'PP-else
-       'BlocksInPending 'PP-static)
+       'BlocksInPending)
 )
 
 (define VS0
