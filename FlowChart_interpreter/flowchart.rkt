@@ -1,6 +1,6 @@
 #lang racket
 
-(provide fc-int fc-define-func eval-ns)
+(provide fc-int fc-define-func eval-ns eval-expr)
 (define-namespace-anchor a)
 (define ns (namespace-anchor->namespace a))
 (define (fc-define-func name x) (namespace-set-variable-value! (string->symbol name) x #t ns))
@@ -8,12 +8,11 @@
 
 ;; Evaluate expression `e` in the environment `env`
 (define (eval-expr e env)
-  (if (list? e)
-    (if (equal? 'quote (first e))
-      (second e)                                                                ;; constant expression
-      (apply (eval-ns (first e)) (map (lambda (x) (eval-expr x env)) (rest e))) ;; function call
-    )   
-    (hash-ref env e (lambda () (raise (format "INVALID VARIABLE NAME: ~a" e)))) ;; variable
+  (define (local-eval x) (eval-expr x env))
+  (match e
+    [`',x x]                                                                      ;; constant
+    [`(,f . ,args) (apply (eval-ns f) (map local-eval args))]                     ;; function call
+    [else (hash-ref env e (λ () (raise (format "INVALID VARIABLE NAME: ~a" e))))] ;; variable
   )
 )
 

@@ -2,43 +2,44 @@
 
 (require "../FlowChart_interpreter/flowchart.rkt")
 
-(define (try-eval cmd marked-args)
-  (define static (foldl (lambda (x y) (and (equal? (car x) 'STATIC) y)) #t marked-args))
-  (if static `(STATIC  (quote ,(apply (eval-ns cmd) (map get-value marked-args))))
-             `(DYNAMIC (,cmd ,@(map get-code marked-args))))
-)
-
-(define (rec-reduce expr vs)
-  (if (list? expr)
-    (if (equal? 'quote (car expr))
-        `(STATIC (quote ,(second expr)))
-        (try-eval (first expr) (map (lambda (x) (rec-reduce x vs)) (rest expr))))
-    (if (hash-has-key? vs expr) `(STATIC (quote ,(hash-ref vs expr))) `(DYNAMIC ,expr))
+ 
+(define (static? expr vs)
+  (define has? (λ (x) ((if (hash? vs) hash-has-key? set-member?) vs x)))
+  (match expr
+    [`',x #t]
+    [`(,fun . ,args) (for/and ([a args]) (static? a vs))]
+    [x (has? x)]
   )
 )
 
-(define (get-code x)
-  (match x
-    [`(STATIC (quote ,x)) `(quote ,x)]
-    [`(DYNAMIC ,x) x])
+(define (reduce expr vs)
+  (define (local-reduce x) (reduce x vs))
+  (if (static? expr vs)
+    `(quote ,(eval-expr expr vs))
+    (match expr
+      [`(,func . ,args) `(,func ,@(map local-reduce args))]
+      [x x]
+    )
+  )
 )
 
-(define (get-value x) 
-  (match x
-    [`(STATIC (quote ,x)) x]
-    [`(DYNAMIC ,x) x])
+(define (evaluate expr env)
+  (second (reduce expr env))
 )
-
-(define (reduce-to-code expr vs) (get-code (rec-reduce expr vs)))
-(define (evaluate expr vs) (get-value (rec-reduce expr vs)))
 
 (define (get-new-read-statement read VS0)
   (define (isNotBinded x)(not (hash-has-key? VS0 x)))
   (cons 'read (filter isNotBinded (rest read)))
 )
 
-(fc-define-func "reduce" reduce-to-code)
-(fc-define-func "evaluate" evaluate)
+(define (find-blocks-in-pending pending program)
+  (define (add x y) (cons (assoc x program) y))
+  (foldl add '() (set-map pending car))
+)
 
-(fc-define-func "bool" (lambda (cond a b) (if cond a b)))
+(fc-define-func "reduce" reduce)
+(fc-define-func "evaluate" evaluate)
+(fc-define-func "bool" (λ (cond a b) (if cond a b)))
 (fc-define-func "get-new-read-statement" get-new-read-statement)
+(fc-define-func "static?" static?)
+(fc-define-func "find-blocks-in-pending" find-blocks-in-pending)
