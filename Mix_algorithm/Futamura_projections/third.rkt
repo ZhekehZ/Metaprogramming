@@ -6,6 +6,7 @@
          "../TM_for_tests/turing.rkt"
 )
 
+;; MIX division
 (define DIVISION
   (set 'PROGRAM 'DIVISION 'LabelLookup 'BB 'Command 'X 'Exp
        'PP-then 'PP-else 'BlocksInPending)
@@ -13,8 +14,9 @@
 
 (define VS0 (hash 'PROGRAM mix 'DIVISION DIVISION))
 
+;; THIRD PROJECTION
 (define cogen (fc-int mix `(,mix ,DIVISION ,VS0)))
-(printf ">>> COMPILER SIZE = ~a\n" (- (length cogen) 1))
+(printf ">>> PROGRAM GENERATOR SIZE = ~a\n" (- (length cogen) 1))
 #| OUTPUT: >>> PROGRAM GENERATOR SIZE = 33 |#
 
 
