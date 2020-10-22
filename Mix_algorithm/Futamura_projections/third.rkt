@@ -9,15 +9,15 @@
 ;; MIX division
 (define DIVISION
   (set 'PROGRAM 'DIVISION 'LabelLookup 'BB 'Command 'X 'Exp
-       'PP-then 'PP-else 'BlocksInPending)
+       'PP-then 'PP-else 'BlocksInPending 'LVA)
 )
 
 (define VS0 (hash 'PROGRAM mix 'DIVISION DIVISION))
 
 ;; THIRD PROJECTION
 (define cogen (fc-int mix `(,mix ,DIVISION ,VS0)))
-(printf ">>> PROGRAM GENERATOR SIZE = ~a\n" (- (length cogen) 1))
-#| OUTPUT: >>> PROGRAM GENERATOR SIZE = 33 |#
+(printf ">>> COMPILER GENERATOR SIZE = ~a\n" (- (length cogen) 1))
+#| OUTPUT: >>> COMPILER GENERATOR SIZE = 33 |#
 
 
 (define tm-compiler (fc-int cogen `(,

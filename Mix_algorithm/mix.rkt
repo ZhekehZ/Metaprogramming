@@ -11,17 +11,10 @@
         (* Marked          := (set))
         (* ResidualCode    := (list (get-new-read-statement (car PROGRAM) VS0)))
         (* BlocksInPending := (find-blocks-in-pending (rest PROGRAM) DIVISION))
+        (* LVA             := (get-LVA-data PROGRAM DIVISION)) ;; Live variable analysis
         (goto _while-pending-prepare)
     )
     (_while-pending-prepare
-        (* BB          := '0) ;; Preparing for dynamic IF: resetting all static variables
-        (* PP-then     := '0)
-        (* PP-else     := '0)
-        (* Exp         := '0)
-        (* X           := '0)
-        (* Command     := '0)
-        (* Static-PP   := '0)
-        (* LabelLookup := '0)
         (goto _while-pending)
     )
     (_while-pending (if (set-empty? Pending) _final _while-pending-body))
@@ -89,11 +82,6 @@
          (if (static? Exp DIVISION) _static-if _dynamic-if)
     )
     (_static-if
-         (* BB          := '0)
-         (* X           := '0)
-         (* Command     := '0)
-         (* Static-PP   := '0)
-         (* LabelLookup := '0)
          (if (evaluate Exp VS) _static-if-dynamic-true _static-if-dynamic-false)
     )
     (_static-if-dynamic-true
@@ -105,11 +93,10 @@
          (goto _while-BB)
     )
     (_dynamic-if
-         (* Pending   := (set-union Pending
-                                    (set-subtract (set (list PP-then VS) (list PP-else VS)) Marked)))
-         (* Code      := (append Code (list (list 'if (reduce Exp VS)
-                                                      (list PP-then VS)
-                                                      (list PP-else VS)))))
+         (* Pick-then := (pick-live LVA PP-then VS))
+         (* Pick-else := (pick-live LVA PP-else VS))
+         (* Pending   := (set-union Pending (set-subtract (set Pick-then Pick-else) Marked)))
+         (* Code      := (append Code (list (list 'if (reduce Exp VS) Pick-then Pick-else))))
          (goto _while-BB)
     )
     (_add-code 
