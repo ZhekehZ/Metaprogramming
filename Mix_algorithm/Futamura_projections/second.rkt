@@ -27,7 +27,7 @@
 (printf ">>> COMPILER SIZE = ~a\n" (- (length compiler) 1))
 #| OUTPUT: >>> COMPILER SIZE = 21 |#
 
-;; COMPILED TM PROGRAM
+;;   ----- TEST -----
 (define compiled (fc-int compiler `(,(hash 'Q tm-program))))
 (run-tm-unit-tests compiled)
 (pretty-print compiled)

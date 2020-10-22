@@ -12,9 +12,6 @@
         (* ResidualCode    := (list (get-new-read-statement (car PROGRAM) VS0)))
         (* BlocksInPending := (find-blocks-in-pending (rest PROGRAM) DIVISION))
         (* LVA             := (get-LVA-data PROGRAM DIVISION)) ;; Live variable analysis
-        (goto _while-pending-prepare)
-    )
-    (_while-pending-prepare
         (goto _while-pending)
     )
     (_while-pending (if (set-empty? Pending) _final _while-pending-body))
@@ -35,9 +32,7 @@
         (* LabelLookup := (set-rest LabelLookup))
         (if (set-empty? LabelLookup) _return-error _while-pending-body-lookup)
     )
-    (_return-error
-        (return (format '"INVALID LABEL ~a" PP))
-    )
+    (_return-error (return (format '"INVALID LABEL ~a" PP)))
     (_while-pending-body-found
         (* BB := (rest (assoc (set-first LabelLookup) PROGRAM)))
         (goto _while-BB)
@@ -101,7 +96,7 @@
     )
     (_add-code 
         (* ResidualCode := (append ResidualCode (list Code)))
-        (goto _while-pending-prepare)
+        (goto _while-pending)
     )
     (_final (return ResidualCode))
    )

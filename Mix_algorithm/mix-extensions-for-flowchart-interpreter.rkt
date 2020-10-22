@@ -2,6 +2,8 @@
 
 (require "../FlowChart_interpreter/flowchart.rkt")
 
+;; static? :: Expr -> Either (Map VarName Constant) (Set VarName) -> Bool
+;;   returns true if all free `expr`'s variables are in `vs` 
 (define (static? expr vs)
   (define has? (λ (x) ((if (hash? vs) hash-has-key? set-member?) vs x)))
   (match expr
@@ -11,6 +13,7 @@
   )
 )
 
+;; reduce :: Expr -> Map VarName Constant -> Expr
 (define (reduce expr vs)
   (define (local-reduce x) (reduce x vs))
   (if (static? expr vs)
@@ -22,11 +25,14 @@
   )
 )
 
+;; get-new-read-statement :: ReadStmt VarName -> Map VarName Constant -> ReadStmt VarName
+;;   where Read Varname stands for S-expression like (read x y z ...)
 (define (get-new-read-statement read VS0)
   (define (isNotBinded x)(not (hash-has-key? VS0 x)))
   (cons 'read (filter isNotBinded (rest read)))
 )
 
+;; blocks-in-pending optimization
 (define (find-blocks-in-pending blocks division)
   (define (get-dynamic-jumps block)
     (match (last block)
@@ -37,7 +43,10 @@
 )
 
 
-;; Live variable analysis
+;; ---- Live variable analysis ----
+
+;; dead-live-split-block :: Block -> ((Set VarName, Set VarName), List LabelName)
+;;  returns ((set-of-dead, set-of-live), list-of-next-labels) for current block
 (define (dead-live-split-block block)
   (define (add-dead-if-not-live x d/l)
     (match d/l [`(,d ,l) (if (set-member? l x) d/l `(,(set-add d x) ,l))])
@@ -65,7 +74,10 @@
   (foldl process `(,(set) ,(set)) block)
 )
 
+;; get-LVA-data :: Program -> Division -> Map LabelName (List VarName)
+;;   returns mapping from labels to their live label lists
 (define (get-LVA-data program division)
+  ;; https://en.wikipedia.org/wiki/Live_variable_analysis
   (define initial (for/hash ([bl (rest program)])
                     (match (dead-live-split-block (rest bl))
                       [`((,kill ,gen) ,out) (values (first bl) `(,gen ,kill ,out))]
@@ -82,7 +94,7 @@
          (values lbl `(,(set-union live (set-subtract (collect out data) kill)) ,kill ,out))]
       ))
     ) 
-  (define (process data)
+  (define (process data) ;;  Kleene closure for `step`
     (define new-data (step data))
     (if (equal? new-data data) data (process new-data))
    )
@@ -90,6 +102,8 @@
      (match entry [`(,lbl ,live ,_ ,_) (values lbl (set->list (set-intersect live division)))]))
 )
 
+;; pick-live :: LVA -> LabelName -> Map VarName Constant -> Map VarName Constant
+;;   filters VS leaving L block live variables only
 (define (pick-live lva-data label vs)
   (define (filter-live lva-data label vs)
     (for/hash ([val (hash-ref lva-data label)]) (values val (hash-ref vs val)))
@@ -97,6 +111,7 @@
   (list label (filter-live lva-data label vs))
 )
 
+;; FC interpreter extensions registration
 (fc-define-func "reduce" reduce)
 (fc-define-func "evaluate" eval-expr)
 (fc-define-func "get-new-read-statement" get-new-read-statement)

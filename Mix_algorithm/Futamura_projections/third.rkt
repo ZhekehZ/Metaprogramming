@@ -20,6 +20,7 @@
 #| OUTPUT: >>> COMPILER GENERATOR SIZE = 33 |#
 
 
+;;  ----- TEST -----
 (define tm-compiler (fc-int cogen `(,
   (hash 'PROGRAM tm-int
         'DIVISION (set 'Q 'Qtail 'Instruction 'Operator 'Symbol 'NextLabel))))
