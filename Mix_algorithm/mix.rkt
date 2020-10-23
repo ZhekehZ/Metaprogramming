@@ -1,7 +1,11 @@
 #lang racket
 
 (require "mix-extensions-for-flowchart-interpreter.rkt")
-(provide mix)
+(provide mix mix-division)
+
+(define mix-division (set 'PROGRAM 'DIVISION 'LabelLookup 'BB 'Command
+                          'X 'Exp 'PP-then 'PP-else 'BlocksInPending 'LVA)
+)
 
 (define mix
   '(
@@ -88,8 +92,8 @@
          (goto _while-BB)
     )
     (_dynamic-if
-         (* Pick-then := (pick-live LVA PP-then VS))
-         (* Pick-else := (pick-live LVA PP-else VS))
+         (* Pick-then := (list PP-then (filter-live (hash-ref LVA PP-then) VS)))
+         (* Pick-else := (list PP-else (filter-live (hash-ref LVA PP-else) VS)))
          (* Pending   := (set-union Pending (set-subtract (set Pick-then Pick-else) Marked)))
          (* Code      := (append Code (list (list 'if (reduce Exp VS) Pick-then Pick-else))))
          (goto _while-BB)

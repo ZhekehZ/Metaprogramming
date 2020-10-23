@@ -1,6 +1,6 @@
 #lang racket
 
-(require "../FlowChart_interpreter/flowchart.rkt")
+(require "../FlowChart_interpreter/flowchart.rkt" "pretty-printer.rkt")
 
 ;; static? :: Expr -> Either (Map VarName Constant) (Set VarName) -> Bool
 ;;   returns true if all free `expr`'s variables are in `vs` 
@@ -104,11 +104,8 @@
 
 ;; pick-live :: LVA -> LabelName -> Map VarName Constant -> Map VarName Constant
 ;;   filters VS leaving L block live variables only
-(define (pick-live lva-data label vs)
-  (define (filter-live lva-data label vs)
-    (for/hash ([val (hash-ref lva-data label)]) (values val (hash-ref vs val)))
-  )
-  (list label (filter-live lva-data label vs))
+(define (filter-live live vs)
+  (for/hash ([val live]) (values val (hash-ref vs val)))
 )
 
 ;; FC interpreter extensions registration
@@ -118,4 +115,5 @@
 (fc-define-func "static?" static?)
 (fc-define-func "find-blocks-in-pending" find-blocks-in-pending)
 (fc-define-func "get-LVA-data" get-LVA-data)
-(fc-define-func "pick-live" pick-live)
+(fc-define-func "filter-live" filter-live)
+(fc-define-func "pretty-print" pretty-print)

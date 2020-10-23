@@ -1,13 +1,21 @@
 #lang racket
 
 (require "../FlowChart_interpreter/flowchart.rkt")
-(provide fc-int-fc)
+(provide fc-int-fc fc-division)
 
+;; Helpful functions
 (fc-define-func "map-cons" (λ (x y) (map cons x y)))
 (fc-define-func "map-first" (λ (x) (map first x)))
 (fc-define-func "map-rest" (λ (x) (map rest x)))
 (fc-define-func "evaluate" eval-expr)
 
+;; FlowChart division for Mix
+(define fc-division
+  (set 'PROGRAM 'VarList 'Labels 'BlockCommands 'Blocks 'CurrentBlock
+       'Statement 'Command 'Expr 'Var 'Then 'Else 'Label)
+)
+
+;; FlowChart interpreter on FlowChart
 (define fc-int-fc
  '(
      (read PROGRAM INPUT)

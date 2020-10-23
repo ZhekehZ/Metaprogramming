@@ -1,6 +1,6 @@
 #lang racket
 
-(provide tm-int
+(provide tm-int tm-division
          tm-program
          run-tm-unit-tests)
 (require "../../FlowChart_interpreter/flowchart.rkt"
@@ -12,6 +12,9 @@
 (fc-define-func "lookup-fst" (λ (lbl lst) (drop lst (index-where lst (λ (x) (equal? (car x) lbl))))))
 (fc-define-func "safe-head" (λ (x) (if (empty? x) '_ (first x))))
 (fc-define-func "safe-tail" (λ (x) (if (empty? x)  x (rest  x))))
+
+;; TM division for Mix
+(define tm-division (set 'Q 'Qtail 'Instruction 'Operator 'Symbol 'NextLabel))
 
 ;; TURING MACHINE INTERPRETER on FlowChart
 (define tm-int
