@@ -23,7 +23,7 @@
     **Provide**
      - *`fc-int-fc`* --- *FlowChart* interpreter implementation
      - *`fc-division`* --- *`fc-int-fc`* variables division for *Mix* algorithm
-  - [__`FlowChart_on_FlowChart/flowchart-int-tests.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-int-tests.rkt) --- tests for *fc-int-fc*
+  - [__`FlowChart_on_FlowChart/flowchart-int-tests.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-int-tests.rkt) --- tests for *`fc-int-fc`*
 
 ### 3. Mix algorithm
   - [__`Mix_algorithm/mix.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/mix.rkt) --- *Mix* algorithm in *FlowChart*  
