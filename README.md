@@ -45,7 +45,11 @@
    >  - *`filter-live`* --- filters out dead static variables from the environment
 
  ### 4. Futamura Projections
-  - [__`Futamura_projections/first.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Futamura_projections/first.rkt) --- 1st Futamura projection *`mix (tm-int, tm-program)`*
-  - [__`Futamura_projections/second.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Futamura_projections/second.rkt) --- 2nd Futamura projection *`mix (mix, tm-int)`*
-  - [__`Futamura_projections/third.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Futamura_projections/third.rkt) --- 3rd Futamura projection *`mix (mix, mix)`* 
-  - [__`FlowChart_on_FlowChart/flowchart-mix-id.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-mix-id.rkt) --- *FlowChart* identity compiler, result of *`mix (mix, mix) (fc-int-fc)`*
+  - [__`Futamura_projections/first.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Futamura_projections/first.rkt) --- 1st Futamura projection  
+         *`mix (tm-int, tm-program)`*
+  - [__`Futamura_projections/second.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Futamura_projections/second.rkt) --- 2nd Futamura projection  
+        *`mix (mix, tm-int)`*
+  - [__`Futamura_projections/third.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Futamura_projections/third.rkt) --- 3rd Futamura projection  
+        *`mix (mix, mix)`* 
+  - [__`FlowChart_on_FlowChart/flowchart-mix-id.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-mix-id.rkt) --- *FlowChart* identity compiler, result of  
+        *`mix (mix, mix) (fc-int-fc)`*
