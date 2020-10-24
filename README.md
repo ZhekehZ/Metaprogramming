@@ -3,10 +3,10 @@
 ### 1. Turing Machine (*TM*) interpreter 
   - [__`Turing_machine_interpreter/turing.rkt`__](https://github.com/ZhekehZ/Metaprogramming/tree/master/Turing_machine_interpreter/turing.rkt) --- *TM* interpreter in *Racket* and tests for it
   - [__`FlowChart_interpreter/turing.rkt`__](https://github.com/ZhekehZ/Metaprogramming/tree/master/FlowChart_interpreter/turing.rkt) --- *TM* interpreter in *FlowChart*  *(for testing the flowchart interpreter only)*  
-    **Provide** 
+    **Provides** 
      - *`tm-int`* --- *TM* interpreter implementation
   - [__`Mix_algorithm/Test_cases/turing.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Test_cases/turing.rkt) --- *TM* interpreter in *FlowChart* *(Mix-friendly implementation)*  
-    **Provide**
+    **Provides**
      - *`tm-int`* --- *TM* interpreter implementation
      - *`tm-division`* --- *TM* varables division for *Mix* algorithm
      - *`tm-program`* --- simple *TM* program for tests
@@ -14,24 +14,24 @@
 
 ### 2. FlowChart interpreter    
   - [__`FlowChart_interpreter/flowchart.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_interpreter/flowchart.rkt) --- *FlowChart* interpreter in *Racket*  
-    **Provide**
+    **Provides**
      - *`fc-int`* --- *FlowChart* interpreter implementation
      - *`eval-ns`* --- expression evaluator in the *`fc-int`* namespace
      - *`eval-expr`* --- expression evaluator in the *`fc-int`* namespace and given environment
      - *`fc-define-func`* --- *`fc-int`* namespace extensor
   - [__`FlowChart_on_FlowChart/flowchart-int.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-int.rkt) --- *FlowChart* interpreter in *FlowChart*  
-    **Provide**
+    **Provides**
      - *`fc-int-fc`* --- *FlowChart* interpreter implementation
      - *`fc-division`* --- *`fc-int-fc`* variables division for *Mix* algorithm
   - [__`FlowChart_on_FlowChart/flowchart-int-tests.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-int-tests.rkt) --- tests for *`fc-int-fc`*
 
 ### 3. Mix algorithm
   - [__`Mix_algorithm/mix.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/mix.rkt) --- *Mix* algorithm in *FlowChart*  
-    **Provide**
+    **Provides**
      - *`mix`* --- *Mix* algorithm implementation
      - *`mix-division`* --- *`mix`* variables division for *`mix`*
  - [__`Mix_algorithm/pretty-printer.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/pretty-printer.rkt) --- pretty-printer for *`mix`* output  
-    **Provide**
+    **Provides**
       - *`pretty-print`* --- *`mix`* output converter
       - *`pretty-display`* --- *`mix`* output printer
  - [__`Mix_algorithm/mix-extensions-for-flowchart-interpreter.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/mix-extensions-for-flowchart-interpreter.rkt) --- some *`fc-int`* namespace extensions  
