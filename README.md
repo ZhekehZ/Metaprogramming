@@ -19,11 +19,11 @@
      - *`eval-ns`* --- expression evaluator in the *`fc-int`* namespace
      - *`eval-expr`* --- expression evaluator in the *`fc-int`* namespace and given environment
      - *`fc-define-func`* --- *`fc-int`* namespace extensor
-  - [__`FlowChart_on_FlowChart/flowchart-int.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-int.rkt) --- *FlowChart* interpreter in *FlowChart*  
+  - [__`FlowChart_in_FlowChart/flowchart-int.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_in_FlowChart/flowchart-int.rkt) --- *FlowChart* interpreter in *FlowChart*  
     **Provides**
      - *`fc-int-fc`* --- *FlowChart* interpreter implementation
      - *`fc-division`* --- *`fc-int-fc`* variables division for *Mix* algorithm
-  - [__`FlowChart_on_FlowChart/flowchart-int-tests.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-int-tests.rkt) --- tests for *`fc-int-fc`*
+  - [__`FlowChart_in_FlowChart/flowchart-int-tests.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_in_FlowChart/flowchart-int-tests.rkt) --- tests for *`fc-int-fc`*
 
 ### 3. Mix algorithm
   - [__`Mix_algorithm/mix.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/mix.rkt) --- *Mix* algorithm in *FlowChart*  
@@ -51,5 +51,5 @@
         *`mix (mix, tm-int)`*
   - [__`Futamura_projections/third.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Futamura_projections/third.rkt) --- 3rd Futamura projection  
         *`mix (mix, mix)`* 
-  - [__`FlowChart_on_FlowChart/flowchart-mix-id.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_on_FlowChart/flowchart-mix-id.rkt) --- *FlowChart* identity compiler, result of  
+  - [__`FlowChart_in_FlowChart/flowchart-mix-id.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_in_FlowChart/flowchart-mix-id.rkt) --- *FlowChart* identity compiler, result of  
         *`mix (mix, mix) (fc-int-fc)`*
