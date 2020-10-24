@@ -15,7 +15,7 @@
        'Statement 'Command 'Expr 'Var 'Then 'Else 'Label)
 )
 
-;; FlowChart interpreter on FlowChart
+;; FlowChart interpreter in FlowChart
 (define fc-int-fc
  '(
      (read PROGRAM INPUT)
