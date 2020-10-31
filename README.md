@@ -51,5 +51,7 @@
         *`mix (mix, tm-int)`*
   - [__`Futamura_projections/third.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/Mix_algorithm/Futamura_projections/third.rkt) --- 3rd Futamura projection  
         *`mix (mix, mix)`* 
-  - [__`FlowChart_in_FlowChart/flowchart-mix-id.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_in_FlowChart/flowchart-mix-id.rkt) --- *FlowChart* identity compiler, result of  
-        *`mix (mix, mix) (fc-int-fc)`*
+  - [__`FlowChart_in_FlowChart/flowchart-mix-projection-tests.rkt`__](https://github.com/ZhekehZ/Metaprogramming/blob/master/FlowChart_in_FlowChart/flowchart-mix-projection-tests.rkt) --- *`fc-int-fc`* (*FlowChart* in *FlowChart*) tests with Futamura projections:
+      + *`mix (fc-int-fc, tm-int)`* 
+      + *`mix (mix, fc-int-fc)`*
+      + *`mix (mix, mix) (fc-int-fc)`*
